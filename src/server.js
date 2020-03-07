@@ -1,12 +1,6 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-// const qs = require("querystring");
-
-const morgan = require('morgan');
-
-// create "middleware"
-const logger = morgan('combined');
 
 const requestHandler = (request, response) => {
   if (request.method === 'GET') {
