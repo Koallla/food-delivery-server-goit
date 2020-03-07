@@ -1,28 +1,63 @@
-const http = require("http");
-const fs = require("fs");
-const path = require("path");
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+// const qs = require("querystring");
+
+const morgan = require('morgan');
+
+// create "middleware"
+const logger = morgan('combined');
 
 const requestHandler = (request, response) => {
-  if (request.url === "/home" || request.url === "/") {
-    response.write("<h2>Hello everyone!!!</h2>");
-    return;
-  } else if (request.url == "/products") {
-    const productFilePath = path.join(
-      __dirname,
-      "./db/products/",
-      "all-products.json"
-    );
-    const products = fs.readFileSync(productFilePath);
+  if (request.method === 'GET') {
+    if (request.url == '/products') {
+      const productFilePath = path.join(
+        __dirname,
+        './db/products/',
+        'all-products.json',
+      );
 
-    response.writeHead(200, {
-      "content-type": "applycation/json"
-    });
-    response.write(products);
-    response.end();
-    return;
-  } else {
-    response.write("<h2>Not found</h2>");
-    response.end();
+      const products = fs.readFileSync(productFilePath);
+
+      response.writeHead(200, {
+        'content-type': 'applycation/json',
+      });
+      response.write(products);
+      response.end();
+      return;
+    } else {
+      response.write('<h2>Not found</h2>');
+      response.end();
+    }
+  }
+
+  if (request.method === 'POST') {
+    if (request.url == '/signup') {
+      request.on('data', data => {
+        const userFilePath = path.join(
+          __dirname,
+          './db/users',
+          'username.json',
+        );
+
+        fs.appendFile(userFilePath, data, err => {
+          if (err) {
+            throw err;
+          }
+        });
+
+        response.writeHead(201, {
+          'content-type': 'applycation/json',
+        });
+        const responseMessage = `{
+          "status": "success", 
+          "user": ${data}
+         }`;
+        response.write(responseMessage);
+        response.end();
+        return;
+      });
+    }
   }
 };
 
@@ -31,7 +66,7 @@ const startServer = port => {
 
   server.listen(port, err => {
     if (err) {
-      return console.log("something bad happened", err);
+      return console.log('something bad happened', err);
     }
     console.log(`server is listening on ${port}`);
   });
