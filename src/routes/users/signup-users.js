@@ -4,13 +4,14 @@ const path = require('path');
 const signUpRoute = (request, response) => {
   if (request.method === 'POST') {
     request.on('data', data => {
+      const username = JSON.parse(data).username;
+
       const userFilePath = path.join(
         __dirname,
-        '../../db/users',
-        'username.json',
+        `../../db/users/${username}.json`,
       );
 
-      fs.appendFile(userFilePath, data, err => {
+      fs.writeFile(userFilePath, data, err => {
         if (err) {
           throw err;
         }
