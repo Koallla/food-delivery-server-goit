@@ -16,7 +16,6 @@ const startServer = port => {
     .use(errorHandler);
 
   app.listen(port);
-
   console.log(`Server was started at http://localhost:${port}`);
 };
 
