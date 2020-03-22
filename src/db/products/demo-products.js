@@ -1,10 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const productPart2 = require('./productsPart2.json');
-
-const productsPath1 = path.join(__dirname, 'productsPart1.json');
-
 const newProductPath = path.join(__dirname, 'all-products.json');
+const productsPath1 = path.join(__dirname, 'productsPart1.json');
+const productPart2 = require('./productsPart2.json');
 
 fs.readFile(productsPath1, 'utf-8', (err, data) => {
   const product = JSON.parse(data);
@@ -14,8 +12,4 @@ fs.readFile(productsPath1, 'utf-8', (err, data) => {
   fs.writeFile(newProductPath, JSON.stringify(newProduct), () => {
     console.log('recording completed');
   });
-});
-
-fs.stat('1.jpg', (err, data) => {
-  console.log(data);
 });

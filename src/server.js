@@ -1,21 +1,22 @@
-const http = require('http');
-const url = require('url');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
 const morgan = require('morgan');
 const router = require('./routes/router');
-const logger = morgan('combined');
+
+const errorHandler = (err, req, res, next) => {
+  res.status(500).send('Error found: ' + err.stack);
+};
 
 const startServer = port => {
-  const server = http.createServer((request, response) => {
-    const parsedUrl = url.parse(request.url);
+  app
+    .use(bodyParser.json())
+    .use(morgan('dev'))
+    .use('/', router)
+    .use(errorHandler);
 
-    const func = router[parsedUrl.pathname] || router.default;
-
-    logger(request, response, () => func(request, response));
-  });
-
-  server.listen(port, () => {
-    console.log(`server is listening on ${port}`);
-  });
+  app.listen(port);
+  console.log(`Server was started at http://localhost:${port}`);
 };
 
 module.exports = startServer;
