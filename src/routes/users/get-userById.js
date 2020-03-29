@@ -1,47 +1,21 @@
-const fs = require('fs');
-const path = require('path');
-const url = require('url');
-
-const filterUsers = (users, id) => {
-  return users.filter(user => user.id === id);
-};
+const User = require('../../db/Schemas/user');
 
 const userById = (request, response) => {
-  console.log(request.params.id);
-
   const id = request.params.id;
 
-  const productFilePath = path.join(
-    __dirname,
-    '../../db/users',
-    'all-users.json',
-  );
-
-  const users = JSON.parse(fs.readFileSync(productFilePath));
-
-  const filteredUser = filterUsers(users, id);
-
-  if (filteredUser.length > 0) {
-    response.writeHead(200, {
-      'content-type': 'applycation/json',
+  const sendResponse = user => {
+    response.status(200);
+    response.json({
+      status: 'success',
+      user,
     });
-    const responseMessage = `{
-            "status": "success",
-            "products": ${JSON.stringify(filteredUser)}
-           }`;
-    response.write(responseMessage);
-    response.end();
-    return;
-  } else {
-    response.writeHead(404, {
-      'content-type': 'applycation/json',
+  };
+
+  User.findById(id)
+    .then(sendResponse)
+    .catch(err => {
+      console.error(err);
     });
-    response.write(`{
-          "status": "not found"
-         }`);
-    response.end();
-    return;
-  }
 };
 
 module.exports = userById;

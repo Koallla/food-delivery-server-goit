@@ -1,58 +1,31 @@
-const fs = require('fs');
-const path = require('path');
-const shortid = require('shortid');
+const User = require('../../db/Schemas/user');
+const bcrypt = require('bcrypt');
 
 const signUpUser = (request, response) => {
-  const userName = request.body.username;
-  const userFilePath = path.join(__dirname, `../../db/users/all-users.json`);
-  const dataUser = Object.assign(request.body, {
-    id: shortid.generate(),
-  });
+  const user = request.body;
+  const hashedPassword = bcrypt.hashSync(user.password, 10);
+  const userData = { ...user, password: hashedPassword };
 
-  const resSavedUser = data => {
-    response.set('content-type', 'applycation/json');
+  const newUser = new User(userData);
 
-    const responseMessage = `{
-                "status": "success",
-                "user": ${JSON.stringify(data)}
-               }`;
-    response
-      .status(201)
-      .send(responseMessage)
-      .end();
-    return;
+  const sendResponse = user => {
+    response.json({
+      status: 'success',
+      user,
+    });
   };
 
-  fs.readFile(userFilePath, (err, array) => {
-    // проверка на совпадение имени пользователя
-    if (
-      array.length > 0 &&
-      JSON.parse(array).some(item => item.username === userName)
-    ) {
-      response
-        .status(400)
-        .send({ error: 'user exists' })
-        .end();
-      return;
-    } else if (array.length !== 0) {
-      const arrayUsers = JSON.parse(array);
-      const newUser = [...arrayUsers, dataUser];
-      fs.writeFile(userFilePath, JSON.stringify(newUser), err => {
-        if (err) throw err;
-        resSavedUser(dataUser);
-      });
-    }
-    // Если файл пуст, добавляем пустой массив
-    else if (array.length === 0) {
-      const dataUserArray = new Array(dataUser);
-      fs.writeFile(userFilePath, JSON.stringify(dataUserArray), err => {
-        if (err) {
-          throw err;
-        }
-        resSavedUser(dataUser);
-      });
-    }
-  });
+  const sendError = () => {
+    response.status(400);
+    response.json({
+      error: 'user was not saved',
+    });
+  };
+
+  newUser
+    .save()
+    .then(sendResponse)
+    .catch(sendError);
 };
 
 module.exports = signUpUser;

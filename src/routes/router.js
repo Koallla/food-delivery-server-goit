@@ -1,22 +1,26 @@
 const express = require('express');
 const mainRoute = require('./main/main');
-const products = require('./products');
-const getProductById = require('./products/get-productById');
+const addProducts = require('./products/addProduct');
+const getOrderById = require('./orders/getOrderById');
 const createUser = require('./users/signup-users');
 const getUserById = require('./users/get-userById');
+const putUserById = require('./users/putUserById');
+const deleteUserById = require('./users/deleteUserById');
 const users = require('./users/allUsers');
-const userOrder = require('./users/userOrder');
+const addOrder = require('./orders/addOrder');
 
 const apiRoutes = express.Router();
 
 apiRoutes
   .get('/', mainRoute)
-  .get('/products', products)
-  .get('/products/:id', getProductById)
+  .post('/products', addProducts)
+  .get('/orders/:id', getOrderById)
   .get('/users', users)
   .post('/users', createUser)
   .get('/users/:id', getUserById)
-  .post('/orders', userOrder)
+  .put('/users/:id', putUserById)
+  .delete('/users/:id', deleteUserById)
+  .post('/orders', addOrder)
   .get('*', (req, res, next) => {
     res.status(404).send('Route not exists');
   });
