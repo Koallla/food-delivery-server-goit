@@ -1,6 +1,8 @@
 const User = require('../../db/Schemas/user');
 
-const allUser = (request, response) => {
+const deleteUserById = (request, response) => {
+  const id = request.params.id;
+
   const sendResponse = user => {
     response.status(200);
     response.json({
@@ -16,9 +18,13 @@ const allUser = (request, response) => {
     });
   };
 
-  User.find()
-    .then(sendResponse)
-    .catch(sendError);
+  User.findOneAndDelete(id)
+    .then(user => {
+      sendResponse(user);
+    })
+    .catch(err => {
+      console.error(err);
+    });
 };
 
-module.exports = allUser;
+module.exports = deleteUserById;
