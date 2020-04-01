@@ -1,17 +1,10 @@
 const Products = require('../../db/Schemas/products');
+const { sendResponse } = require('../Errors/sendErrors');
 
 const addProduct = (request, response) => {
   const product = request.body;
 
   const newProduct = new Products(product);
-
-  const sendResponse = product => {
-    response.status(201);
-    response.json({
-      status: 'success',
-      product,
-    });
-  };
 
   const sendError = () => {
     response.status(400);
@@ -22,7 +15,9 @@ const addProduct = (request, response) => {
 
   newProduct
     .save()
-    .then(sendResponse)
+    .then(product => {
+      sendResponse(product, response, '201');
+    })
     .catch(sendError);
 };
 
