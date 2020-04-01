@@ -1,4 +1,4 @@
-const sendResponse = (item = '', response, status) => {
+const sendResponse = (item, response, status = '200') => {
   response.status(`${status}`);
   response.json({
     status: 'success',

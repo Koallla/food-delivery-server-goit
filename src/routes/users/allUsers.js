@@ -6,7 +6,9 @@ const allUser = (request, response) => {
     .then(users => {
       sendResponse(users, response, '200');
     })
-    .catch(sendError(response, 'Users'));
+    .catch(() => {
+      sendError(response, 'Users');
+    });
 };
 
 module.exports = allUser;

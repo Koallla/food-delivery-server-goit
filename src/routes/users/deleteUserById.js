@@ -4,7 +4,7 @@ const { sendResponse, sendError } = require('../Errors/sendErrors');
 const deleteUserById = (request, response) => {
   const id = request.params.id;
 
-  User.findOneAndDelete(id)
+  User.findOneAndDelete({ _id: id })
     .then(user => {
       sendResponse(user, response, '200');
     })

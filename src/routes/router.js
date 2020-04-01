@@ -4,6 +4,7 @@ const addProducts = require('./products/addProduct');
 const products = require('./products/index');
 const getProductById = require('./products/getProductById');
 const putProductById = require('./products/putProductsById');
+const deleteProductById = require('./products/deleteProductById');
 const getOrderById = require('./orders/getOrderById');
 const createUser = require('./users/signUpUsers');
 const getUserById = require('./users/getUserById');
@@ -17,6 +18,7 @@ const apiRoutes = express.Router();
 apiRoutes
   .get('/', mainRoute)
   .post('/products', addProducts)
+  .delete('/products/:id', deleteProductById)
   .get('/products', products)
   .get('/products/:id', getProductById)
   .put('/products/:id', putProductById)

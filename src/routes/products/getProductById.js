@@ -6,9 +6,11 @@ const getProductById = (request, response) => {
 
   Products.findById(id)
     .then(product => {
-      sendResponse(product, response, '200');
+      sendResponse(product, response);
     })
-    .catch(sendError(response, 'Product'));
+    .catch(() => {
+      sendError(response, 'Product');
+    });
 };
 
 module.exports = getProductById;

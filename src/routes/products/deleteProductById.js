@@ -1,29 +1,15 @@
 const Products = require('../../db/Schemas/products');
+const { sendResponse, sendError } = require('../Errors/sendErrors');
 
 const deleteProductById = (request, response) => {
   const id = request.params.id;
 
-  const sendResponse = product => {
-    response.status(200);
-    response.json({
-      status: 'success',
-      product,
-    });
-  };
-
-  const sendError = () => {
-    response.status(400);
-    response.json({
-      error: 'Product was not found',
-    });
-  };
-
-  Products.findOneAndDelete(id)
+  Products.findOneAndDelete({ _id: id })
     .then(product => {
-      sendResponse(product);
+      sendResponse(product, response);
     })
-    .catch(err => {
-      console.error(err);
+    .catch(() => {
+      sendError(response, 'Product');
     });
 };
 
