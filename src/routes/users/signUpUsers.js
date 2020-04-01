@@ -19,7 +19,7 @@ const signUpUser = (request, response) => {
   newUser
     .save()
     .then(user => {
-      sendResponse(user, response, '200');
+      sendResponse(user, response, '201');
     })
     .catch(sendError);
 };

@@ -1,8 +1,8 @@
-const sendResponse = (users = '', response, status) => {
+const sendResponse = (item = '', response, status) => {
   response.status(`${status}`);
   response.json({
     status: 'success',
-    users,
+    item,
   });
 };
 

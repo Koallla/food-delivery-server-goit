@@ -1,26 +1,14 @@
 const Products = require('../../db/Schemas/products');
+const { sendResponse, sendError } = require('../Errors/sendErrors');
 
 const getProductById = (request, response) => {
   const id = request.params.id;
 
-  const sendResponse = product => {
-    response.status(200);
-    response.json({
-      status: 'success',
-      product,
-    });
-  };
-
-  const sendError = () => {
-    response.status(400);
-    response.json({
-      error: 'product was not found',
-    });
-  };
-
   Products.findById(id)
-    .then(sendResponse)
-    .catch(sendError);
+    .then(product => {
+      sendResponse(product, response, '200');
+    })
+    .catch(sendError(response, 'Product'));
 };
 
 module.exports = getProductById;
