@@ -1,21 +1,30 @@
 const User = require('../../db/Schemas/user');
+// const { sendError } = require('../Errors/sendErrors');
 
 const userById = (request, response) => {
   const id = request.params.id;
 
   const sendResponse = user => {
-    response.status(200);
+    if (!user) {
+      return sendError();
+    }
+
     response.json({
       status: 'success',
-      user,
+      user: user,
+    });
+  };
+
+  const sendError = () => {
+    response.status(400);
+    response.json({
+      error: `User was not found`,
     });
   };
 
   User.findById(id)
     .then(sendResponse)
-    .catch(err => {
-      console.error(err);
-    });
+    .catch(sendError);
 };
 
 module.exports = userById;
