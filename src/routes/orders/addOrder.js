@@ -19,10 +19,7 @@ const addOrder = (request, response) => {
     });
   };
 
-  newOrder
-    .save()
-    .then(sendResponse)
-    .catch(sendError);
+  newOrder.save().then(sendResponse).catch(sendError);
 };
 
 module.exports = addOrder;

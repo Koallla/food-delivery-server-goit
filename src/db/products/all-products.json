@@ -7,6 +7,7 @@
     "price": "100",
     "currency": "UAN",
     "creatorId": 1,
+    "likes": 0,
     "created": "21-08-2018",
     "modified": "21-08-2018",
     "categories": ["superpizza"]
@@ -19,6 +20,7 @@
     "price": "80",
     "currency": "UAN",
     "creatorId": 1,
+    "likes": 0,
     "created": "21-08-2018",
     "modified": "21-08-2018",
     "categories": ["superpizza"]
@@ -31,6 +33,7 @@
     "price": "110",
     "currency": "UAN",
     "creatorId": 1,
+    "likes": 0,
     "created": "21-08-2018",
     "modified": "21-08-2018",
     "categories": ["pizza"]
@@ -43,6 +46,7 @@
     "price": "90",
     "currency": "UAN",
     "creatorId": 1,
+    "likes": 0,
     "created": "21-08-2018",
     "modified": "21-08-2018",
     "categories": ["pizza"]
@@ -55,6 +59,7 @@
     "price": "120",
     "currency": "UAN",
     "creatorId": 1,
+    "likes": 0,
     "created": "21-08-2018",
     "modified": "21-08-2018",
     "categories": ["pizza"]
@@ -67,6 +72,7 @@
     "price": "130",
     "currency": "UAN",
     "creatorId": 1,
+    "likes": 0,
     "created": "21-08-2018",
     "modified": "21-08-2018",
     "categories": ["pizza"]
@@ -79,6 +85,7 @@
     "price": "150",
     "currency": "UAN",
     "creatorId": 1,
+    "likes": 0,
     "created": "21-08-2018",
     "modified": "21-08-2018",
     "categories": ["pizza"]

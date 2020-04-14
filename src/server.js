@@ -3,6 +3,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const router = require('./routes/router');
+const mongoose = require('mongoose');
+
+mongoose.set('useCreateIndex', true);
 
 const errorHandler = (err, req, res, next) => {
   console.error(err.stack);

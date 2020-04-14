@@ -1,5 +1,6 @@
 const User = require('../../db/Schemas/user');
 const bcrypt = require('bcrypt');
+const { sendResponse } = require('../Errors/sendErrors');
 
 const signUpUser = (request, response) => {
   const user = request.body;
@@ -7,13 +8,6 @@ const signUpUser = (request, response) => {
   const userData = { ...user, password: hashedPassword };
 
   const newUser = new User(userData);
-
-  const sendResponse = user => {
-    response.json({
-      status: 'success',
-      user,
-    });
-  };
 
   const sendError = () => {
     response.status(400);
@@ -24,7 +18,9 @@ const signUpUser = (request, response) => {
 
   newUser
     .save()
-    .then(sendResponse)
+    .then(user => {
+      sendResponse(user, response, '201');
+    })
     .catch(sendError);
 };
 

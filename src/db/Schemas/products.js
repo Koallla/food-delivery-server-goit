@@ -13,6 +13,10 @@ const productsSchema = new Schema({
   created: String,
   modified: String,
   categories: [],
+  ingredients: [
+    { type: Schema.Types.ObjectId, ref: 'Ingredients' },
+    { type: Schema.Types.ObjectId, ref: 'Ingredients' },
+  ],
 });
 
 const Products = mongoose.model('Products', productsSchema);

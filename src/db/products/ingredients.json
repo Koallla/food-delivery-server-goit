@@ -1,0 +1,34 @@
+[
+  {
+    "name": "tomato",
+    "description": "Vegetable"
+  },
+  {
+    "name": "pepper",
+    "description": "Vegetable"
+  },
+  {
+    "name": "corn",
+    "description": "Vegetable"
+  },
+  {
+    "name": "bazilik",
+    "description": "Vegetable"
+  },
+  {
+    "name": "becon",
+    "description": "Meat"
+  },
+  {
+    "name": "sausages",
+    "description": "Meat"
+  },
+  {
+    "name": "chicken",
+    "description": "Meat"
+  },
+  {
+    "name": "pork",
+    "description": "Meat"
+  }
+]
