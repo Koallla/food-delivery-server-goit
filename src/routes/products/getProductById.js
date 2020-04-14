@@ -5,6 +5,7 @@ const getProductById = (request, response) => {
   const id = request.params.id;
 
   Products.findById(id)
+    .populate('ingredients')
     .then(product => {
       sendResponse(product, response);
     })

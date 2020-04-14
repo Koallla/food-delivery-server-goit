@@ -5,9 +5,7 @@ const { sendResponse, sendError } = require('../Errors/sendErrors');
 // http://localhost:3001/products/?category="superpizza"
 
 const productsById = (request, response) => {
-  const category = Object.values(request.query)
-    .toString()
-    .slice(1, -1);
+  const category = Object.values(request.query).toString().slice(1, -1);
 
   Products.find()
     .where('categories')
